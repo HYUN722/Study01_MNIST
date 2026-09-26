@@ -1,0 +1,186 @@
+/* 작성일: 2026-09-27 04:57 (KST)
+   수정일: 2026-09-27 05:29 (KST) — 최종 리뷰 반영: 막대 대비(steps.js 쪽 변경에 맞춰
+     트랙 색 유지), 단계 점 히트 영역/대비, 무대 캔버스 비율 왜곡, 6단계 스크롤 높이
+   steps.css — 발표용 "단계별 시각화" 화면 꾸미기.
+   색·변수(--바탕, --카드, --글자, --흐린글자, --강조, --테두리, --막대바탕)는
+   style.css 와 같은 이름을 그대로 씁니다(steps.html 이 style.css 를 먼저 읽습니다).
+   1280×800 노트북 화면에서 스크롤 없이 들어오도록 여백을 줄였습니다. */
+
+body {
+  padding: 16px 16px 20px;
+}
+
+header {
+  margin-bottom: 12px;
+}
+
+header h1 { font-size: 1.25rem; }
+header p { font-size: 0.85rem; }
+
+main {
+  max-width: 1100px;
+  align-items: stretch;
+}
+
+.그리기칸 {
+  flex: 0 1 320px;
+}
+
+.무대 {
+  flex: 1 1 640px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── 단계 이동 점 ──────────────────────────────────────────── */
+
+#단계점들 {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: 4px;
+}
+
+.점 {
+  position: relative;    /* ::before 히트 영역의 기준점 */
+  width: 10px;
+  height: 10px;
+  padding: 0;
+  border-radius: 50%;
+  border: 1px solid var(--테두리);
+  /* --막대바탕(#e9edf2) 은 카드 배경 위 대비가 1.29:1 로 거의 안 보였습니다.
+     이미 본문 글자로 쓰여 대비가 충분히 검증된 --흐린글자 를 재사용합니다. */
+  background: var(--흐린글자);
+  cursor: pointer;
+  flex: none;
+  max-width: none;
+}
+
+/* 점 자체는 10×10px 로 두되(디자인 유지), 클릭/탭 영역만 24×24px 이상으로 키웁니다
+   (WCAG 2.5.8). 절대 위치라 레이아웃 높이에는 영향을 주지 않습니다. */
+.점::before {
+  content: "";
+  position: absolute;
+  inset: -7px;
+}
+
+.점.현재 {
+  background: var(--강조);
+  border-color: var(--강조);
+}
+
+#단계제목 {
+  text-align: center;
+  margin: 0 0 2px;
+  font-size: 1.1rem;
+}
+
+.크기표기 {
+  text-align: center;
+  margin: 0 0 4px;
+}
+
+/* ── 무대(단계화면) ────────────────────────────────────────── */
+
+#단계화면 {
+  min-height: 360px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#단계화면 canvas {
+  max-width: 100%;
+  max-height: 360px;
+  image-rendering: pixelated;
+}
+
+/* 특징 지도(26×26/24×24/12×12 타일 격자)·막대그래프 캔버스는 실제 크기가 작아도
+   발표 화면에서 잘 보이도록 세로 최대 340px 까지 키웁니다.
+   height 를 고정하면(예전 값) 가로가 카드 너비에 눌릴 때 세로만 그대로 남아
+   비율이 왜곡됩니다(720×300 이 730×340 으로 그려져 세로가 12% 늘어난 사례).
+   max-height/max-width 만 주면 브라우저가 캔버스의 내재 비율을 유지한 채
+   맞는 크기를 골라 줍니다. */
+.무대캔버스 {
+  max-height: 340px;
+  max-width: 100%;
+}
+
+.빈안내 {
+  color: var(--흐린글자);
+  text-align: center;
+  font-size: 0.95rem;
+}
+
+#단계설명 {
+  min-height: 2.6em;
+  margin: 0 0 8px;
+  color: var(--흐린글자);
+  font-size: 0.88rem;
+  text-align: center;
+}
+
+.무대 .단추칸 { margin-top: 10px; }
+
+/* ── 단계 1: 원본 ↔ 28×28 나란히 ─────────────────────────────── */
+
+.입력비교 {
+  display: flex;
+  gap: 32px;
+  align-items: flex-end;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.입력비교_칸 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.입력비교_라벨 {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--흐린글자);
+}
+
+.입력비교_칸 canvas {
+  background: #000;
+  border-radius: 6px;
+  border: 1px solid var(--테두리);
+}
+
+.확대캔버스 {
+  width: 224px;
+  height: 224px;
+  image-rendering: pixelated;
+}
+
+/* ── 단계 6: 출력(예측 + 확률 막대) ───────────────────────────── */
+
+.출력칸 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.예측표시 {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+}
+
+.예측숫자 {
+  font-size: 4rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--강조);
+}
+
+.예측확신도 {
+  font-size: 1.1rem;
+  color: var(--흐린글자);
+}

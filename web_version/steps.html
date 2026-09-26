@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<!-- 작성일: 2026-09-27 04:57 (KST) -->
+<!-- 수정일: 2026-09-27 05:29 (KST) — 최종 리뷰 반영: 단계 전환 시 제목·크기·설명을
+     aria-live="polite" 로 스크린 리더에 알리도록 구조 변경 -->
+<!-- steps.html — 발표용 "단계별 시각화" 화면. index.html 과 같은 추론 엔진을 쓰되,
+     결과 대신 CNN 이 그림을 처리하는 여섯 단계를 하나씩 보여줍니다. -->
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>단계별 시각화 — 손글씨 숫자 인식기</title>
+  <meta name="description" content="CNN 이 손글씨 숫자를 인식하는 여섯 단계(전처리 → 합성곱 → 풀링 → 완전연결 → 출력)를 하나씩 보여주는 발표용 화면입니다.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="steps.css">
+</head>
+<body>
+
+  <header>
+    <h1>CNN 은 숫자를 어떻게 볼까요?</h1>
+    <p>왼쪽에 숫자를 그리면, 오른쪽에서 인식 과정을 여섯 단계로 나눠 보여줍니다.</p>
+  </header>
+
+  <main>
+    <section class="칸 그리기칸">
+      <h2>여기에 숫자를 그리세요</h2>
+      <canvas id="그림판" width="280" height="280"></canvas>
+      <button id="지우기단추" type="button">지우기</button>
+    </section>
+
+    <section class="칸 무대">
+      <nav id="단계점들" aria-label="단계 이동"></nav>
+      <!-- 단계를 넘기면 제목·크기·설명이 통째로 바뀝니다. 스크린 리더에도 알려지도록
+           셋을 하나의 aria-live="polite" 영역으로 묶습니다(그림은 캔버스 자체의
+           role="img"/aria-label 로 따로 설명합니다). -->
+      <div id="단계정보" aria-live="polite">
+        <h2 id="단계제목">1. 입력 전처리</h2>
+        <p id="단계크기" class="크기표기">280×280 → 28×28</p>
+        <p id="단계설명"></p>
+      </div>
+      <div id="단계화면"></div>
+      <div class="단추칸">
+        <button id="이전단추" type="button">← 이전</button>
+        <button id="다음단추" type="button">다음 →</button>
+      </div>
+    </section>
+  </main>
+
+  <p id="상태">준비 중...</p>
+
+  <footer>
+    같은 추론 엔진(<code>model.js</code>)을 그대로 쓰는 발표용 화면입니다 ·
+    <a href="index.html">일반 화면으로 돌아가기</a>
+  </footer>
+
+  <!-- 추론·전처리·시각화를 먼저 읽고 마지막에 화면 연결 코드(steps.js)를 읽습니다. -->
+  <script src="model.js"></script>
+  <script src="preprocess.js"></script>
+  <script src="시각화.js"></script>
+  <script src="steps.js"></script>
+</body>
+</html>

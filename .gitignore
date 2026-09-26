@@ -8,6 +8,9 @@ desktop_version/data/
 
 # 임시 파일 / 보관함
 _보관/
+Claude outputs/
+.superpowers/
+tests/js/_임시/
 _setup_and_train.py
 폴더_정리.py
 run_log.txt
