@@ -41,6 +41,15 @@ header {
   text-align: center;
 }
 
+/* 페이지 맨 위 학번·이름 표기 */
+.학생정보 {
+  margin: 0 0 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--글자);
+  letter-spacing: 0.01em;
+}
+
 h1 { font-size: 1.5rem; margin: 0 0 6px; }
 
 header p { margin: 0; color: var(--흐린글자); font-size: 0.9rem; }
