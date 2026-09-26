@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<!-- 작성일: 2026-09-27 03:58 (KST) -->
+<!-- index.html — 손글씨 숫자 인식기 웹 버전. 외부 라이브러리 없이 동작합니다. -->
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>손글씨 숫자 인식기</title>
+  <meta name="description" content="브라우저에서 바로 동작하는 MNIST 손글씨 숫자 인식기. 순수 자바스크립트로 CNN 추론을 수행합니다.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <h1>손글씨 숫자 인식기</h1>
+    <p>마우스나 손가락으로 숫자(0~9)를 그리면 브라우저 안에서 바로 인식합니다. 그림은 서버로 전송되지 않습니다.</p>
+  </header>
+
+  <main>
+    <!-- 왼쪽: 그림판 -->
+    <section class="칸">
+      <h2>여기에 숫자를 그리세요</h2>
+      <canvas id="그림판" width="280" height="280"></canvas>
+      <div class="단추칸">
+        <button id="인식단추" type="button">인식하기</button>
+        <button id="지우기단추" type="button">지우기</button>
+      </div>
+      <p class="안내">손을 떼면 자동으로 인식합니다 · 오른쪽 클릭으로 지우기</p>
+    </section>
+
+    <!-- 오른쪽: 결과 -->
+    <section class="칸">
+      <h2>인식 결과</h2>
+      <div id="결과숫자">?</div>
+      <div id="확신도">숫자를 그려 주세요</div>
+
+      <h2>숫자별 확률</h2>
+      <div class="확률표" id="확률표"></div>
+
+      <h2>모델이 보는 28×28 이미지</h2>
+      <canvas id="미리보기" width="28" height="28"></canvas>
+    </section>
+  </main>
+
+  <p id="상태">준비 중...</p>
+
+  <footer>
+    데스크톱 버전(PyTorch)에서 학습한 CNN 가중치를 그대로 사용합니다 ·
+    <a href="https://github.com/HYUN722/Study01_MNIST">소스 코드</a>
+  </footer>
+
+  <!-- 순서 주의: 추론·전처리를 먼저 읽고 마지막에 화면 연결 코드를 읽습니다. -->
+  <script src="model.js"></script>
+  <script src="preprocess.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

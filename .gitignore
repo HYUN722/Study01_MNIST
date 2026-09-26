@@ -4,9 +4,12 @@ __pycache__/
 
 # MNIST 원본 데이터 (train.py 실행 시 자동으로 내려받습니다)
 data/
+desktop_version/data/
 
-# 임시 파일
+# 임시 파일 / 보관함
+_보관/
 _setup_and_train.py
+폴더_정리.py
 run_log.txt
 
 # 가상환경 / 에디터 설정
