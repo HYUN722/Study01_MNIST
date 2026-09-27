@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 # 작성일: 2026-09-27 04:18 (KST)
+# 작성자: 2601975 정수현
 """
 웹검증.py
 web_version 을 실제 정적 서버로 띄우고 headless Chromium 으로 숫자를 그려

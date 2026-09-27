@@ -1,4 +1,5 @@
 // 작성일: 2026-09-27 04:18 (KST)
+// 작성자: 2601975 정수현
 //
 // 검증.js
 // web_version/model.js 를 그대로 require 해서, tests/js/기준구현.py 가 만들어 둔
